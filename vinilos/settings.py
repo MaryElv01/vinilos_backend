@@ -82,7 +82,7 @@ CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = None
 CSRF_COOKIE_SECURE = not DEBUG
 CSRF_USE_SESSIONS = False  # Usa cookies, no sesiones
-CSRF_TRUSTED_ORIGINS = ["https://vinilostudios.me", "http://localhost:3000", ...]
+CSRF_TRUSTED_ORIGINS = ["https://vinilostudios.me", "http://localhost:3000"]
 
 
 ROOT_URLCONF = 'vinilos.urls'
