@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import cloudinary
+from corsheaders.defaults import default_headers, default_methods
 
 load_dotenv()
 
@@ -49,10 +50,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -60,34 +61,28 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^.*$', 
+]
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOW_METHODS = [
-    'GET',
-    'POST',
-    'PUT',
-    'PATCH',
-    'DELETE',
-    'OPTIONS',
-]
-
-CORS_ALLOW_HEADERS = [
-    'content-type',
+CORS_ALLOW_METHODS = list(default_methods)
+CORS_ALLOW_HEADERS = list(default_headers) + [
     'authorization',
+    'content-type',
     'x-requested-with',
-    'accept',
     'x-csrftoken'
 ]
 
-SESSION_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
-SESSION_COOKIE_SECURE = not DEBUG
+
+SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
+CSRF_COOKIE_SAMESITE = None
 CSRF_COOKIE_SECURE = not DEBUG
 CSRF_USE_SESSIONS = False  # Usa cookies, no sesiones
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
+CSRF_TRUSTED_ORIGINS = ["https://vinilostudios.me", "http://localhost:3000", ...]
 
 
 ROOT_URLCONF = 'vinilos.urls'
