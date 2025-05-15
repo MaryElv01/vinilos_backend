@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = True
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -61,8 +61,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r'^.*$', 
+CORS_ALLOWED_ORIGINS = [
+    "https://vinilostudios.me","http://localhost:3000"
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -77,6 +77,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 
 SESSION_COOKIE_SAMESITE = None
 SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_DOMAIN = ".vinilostudios.me" #<------------------CORS
 
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = None
