@@ -1,0 +1,7 @@
+from .tattooSerializer import TattooSerializer
+from .piercingSerializer import PiercingSerializer
+from .productoSerializer import ProductoSerializer, VenderProductoSerializer
+from .reporte_abastecimientoSerializer import ItemPedidoSerializer, Reporte_AbastecimientoSerializer
+from .reporte_ventaSerializer import Reporte_VentaSerializer
+from .reporte_uso_materialSerializer import Reporte_Uso_MaterialSerializer
+from .reporte_finanzaSerializer import Reporte_FinanzaSerializer

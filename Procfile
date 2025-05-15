@@ -1,0 +1,1 @@
+web: gunicorn vinilos.wsgi --log-file -
