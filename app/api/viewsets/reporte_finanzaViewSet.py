@@ -23,7 +23,6 @@ class ReporteFinanzaViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['transaction_type']
     search_fields    = ['description']
     permission_classes = [IsSuperuserOrTatuadorOrPerforador]
-    authentication_classes = [CsrfExemptSessionAuthentication]
 
     @action(detail=False, methods=['get'])
     def resumen(self, request):

@@ -11,7 +11,6 @@ class Reporte_VentaViewSet(viewsets.ModelViewSet):
     queryset = Reporte_Venta.objects.all()
     serializer_class = Reporte_VentaSerializer
     permission_classes = [IsSuperuserOrPerforador]
-    authentication_classes = [CsrfExemptSessionAuthentication]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

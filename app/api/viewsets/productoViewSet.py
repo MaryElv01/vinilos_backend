@@ -17,7 +17,6 @@ class ProductoViewSet(viewsets.ModelViewSet):
     serializer_class = ProductoSerializer
     parser_classes = (MultiPartParser, FormParser)
     permission_classes = [IsSuperuserOrPerforador]
-    authentication_classes = [CsrfExemptSessionAuthentication]
 
     @action(detail=False, methods=['get'], url_path='piercings_venta')
     def piercings_venta(self, request):

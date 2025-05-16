@@ -12,7 +12,6 @@ from ...models import Piercing
 from ..serializers import PiercingSerializer
 
 class PiercingViewSet(viewsets.ModelViewSet):
-    authentication_classes = [CsrfExemptSessionAuthentication]
     queryset = Piercing.objects.all()
     serializer_class = PiercingSerializer
     parser_classes = (MultiPartParser, FormParser)
