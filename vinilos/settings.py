@@ -111,18 +111,12 @@ TEMPLATES = [
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+        'app.api.authentication.JWTAuthenticationFromCookie',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
-REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = [
-    'app.api.authentication.JWTAuthenticationFromCookie',
-]
-REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = [
-    'rest_framework.permissions.IsAuthenticated',
-]
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
