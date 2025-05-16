@@ -16,7 +16,6 @@ class TattooViewSet(viewsets.ModelViewSet):
     serializer_class = TattooSerializer
     parser_classes = (MultiPartParser, FormParser)
     permission_classes = [IsSuperuserOrTatuador]
-    authentication_classes = [CsrfExemptSessionAuthentication]
 
     @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path='publicos')
     def publicos(self, request):

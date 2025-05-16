@@ -8,7 +8,6 @@ from app.api.serializers import Reporte_AbastecimientoSerializer, VenderProducto
 
 class Reporte_AbastecimientoViewSet(viewsets.ModelViewSet):
     queryset = Reporte_Abastecimiento.objects.all()
-    authentication_classes = [CsrfExemptSessionAuthentication]
     serializer_class = Reporte_AbastecimientoSerializer
     permission_classes = [permissions.IsAdminUser]
 

@@ -13,7 +13,6 @@ class Reporte_Uso_MaterialViewSet(viewsets.ModelViewSet):
     queryset = Reporte_Uso_Material.objects.all()
     serializer_class = Reporte_Uso_MaterialSerializer
     permission_classes = [IsSuperuserOrTatuadorOrPerforador]
-    authentication_classes = [CsrfExemptSessionAuthentication]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
