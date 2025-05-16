@@ -1,6 +1,7 @@
 from django.urls import URLPattern, path, include
 from rest_framework.routers import DefaultRouter
 from .viewsets import TattooViewSet, PiercingViewSet, ProductoViewSet, Reporte_AbastecimientoViewSet, Reporte_VentaViewSet, Reporte_Uso_MaterialViewSet, ReporteFinanzaViewSet, DashboardAPIView, AuthViewSet
+from rest_framework_simplejwt.views import TokenRefreshView
 
 router = DefaultRouter()
 
@@ -16,4 +17,5 @@ router.register(r'auth', AuthViewSet, basename='auth')
 urlpatterns = [
     path('', include(router.urls)),
     path('dashboard/', DashboardAPIView.as_view(), name='dashboard'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh')
 ]
