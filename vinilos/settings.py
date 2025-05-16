@@ -63,7 +63,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://vinilostudios.me","http://localhost:3000"
+    "https://vinilostudios.me","http://localhost:3000","https://vinilos-backend-2tpu.onrender.com"
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -72,7 +72,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     'authorization',
     'content-type',
     'x-requested-with',
-    'x-csrftoken'
+    'set-cookie'
 ]
 
 
