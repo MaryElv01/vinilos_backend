@@ -111,7 +111,7 @@ TEMPLATES = [
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'app.api.authentication.JWTAuthenticationFromCookie',
+        'app.api.permissions.JWTAuthenticationFromCookie',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
