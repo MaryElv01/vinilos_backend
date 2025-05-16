@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+from datetime import timedelta
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'rest_framework',
     'django.contrib.staticfiles',
@@ -75,15 +77,16 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 ]
 
 
-SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = False
 SESSION_COOKIE_DOMAIN = ".vinilostudios.me" #<------------------CORS
 
 CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = None
-CSRF_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True
 CSRF_USE_SESSIONS = False  # Usa cookies, no sesiones
+CSRF_COOKIE_DOMAIN  = '.vinilostudios.me'
 CSRF_TRUSTED_ORIGINS = ["https://vinilostudios.me", "http://localhost:3000"]
 
 
@@ -113,6 +116,19 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+}
+REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = [
+    'app.api.authentication.JWTAuthenticationFromCookie',
+]
+REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = [
+    'rest_framework.permissions.IsAuthenticated',
+]
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,      # o True si quieres rotar en cada refresh
+    'BLACKLIST_AFTER_ROTATION': True,    # si usas blacklist
 }
 
 if not DEBUG:

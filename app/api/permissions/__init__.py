@@ -1,2 +1,2 @@
 from .permissions import IsSuperuserOrPerforador, IsSuperuserOrTatuadorOrPerforador
-from .authentication import CsrfExemptSessionAuthentication
+from .authentication import CsrfExemptSessionAuthentication, JWTAuthenticationFromCookie
