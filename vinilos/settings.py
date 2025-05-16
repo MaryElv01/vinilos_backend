@@ -77,6 +77,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 
 SESSION_COOKIE_SAMESITE = None
 SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = False
 SESSION_COOKIE_DOMAIN = ".vinilostudios.me" #<------------------CORS
 
 CSRF_COOKIE_HTTPONLY = False
