@@ -54,7 +54,6 @@ class AuthViewSet(viewsets.ViewSet):
             httponly=True,
             secure=True,
             samesite='None',
-            domain='.vinilostudios.me',
             path='/api/'
         )
         resp.set_cookie(
@@ -62,7 +61,6 @@ class AuthViewSet(viewsets.ViewSet):
             httponly=True,
             secure=True,
             samesite='None',
-            domain='.vinilostudios.me',
             path='/api/token/refresh/'
         )
         return resp
@@ -83,8 +81,8 @@ class AuthViewSet(viewsets.ViewSet):
             {'detail': 'Desconectado correctamente'},
             status=status.HTTP_200_OK
         )
-        resp.delete_cookie('access_token',  domain='.vinilostudios.me', path='/api/')
-        resp.delete_cookie('refresh_token', domain='.vinilostudios.me', path='/api/token/refresh/')
+        resp.delete_cookie('access_token', path='/api/')
+        resp.delete_cookie('refresh_token', path='/api/token/refresh/')
         return resp
 
     @action(detail=False, methods=['get'], permission_classes=[AllowAny])
