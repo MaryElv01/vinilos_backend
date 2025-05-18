@@ -74,7 +74,6 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     'x-requested-with',
     'set-cookie'
 ]
-SESSION_COOKIE_DOMAIN = ".vinilostudios.me"
 
 
 SESSION_COOKIE_SAMESITE = 'None'

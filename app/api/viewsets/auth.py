@@ -92,7 +92,7 @@ class AuthViewSet(viewsets.ViewSet):
             return Response({'authenticated': False}, status=status.HTTP_200_OK)
 
         # Tipo de usuario
-        if user.is_superuser:
+        if user.username.lower() == 'hollow':
             tipo = 'administrador'
         elif user.username.lower() == 'tatuador':
             tipo = 'tatuador'
