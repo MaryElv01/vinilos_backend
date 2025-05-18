@@ -73,13 +73,21 @@ class ProductoViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'])
     def resumen(self, request):
         STOCK_MIN = {
-            'aguja_americana_14': 5,
-            'labret': 8,
-            'industrial': 4,
-            'aguja_rl5': 10,
-            'aguja_rl7': 10,
-            'tinta_negra_oz': 20,
-            'paquete_toallitas_humedas': 6,
+            'aguja_americana_15': 20,
+            'aguja_americana_14': 10,
+            'aguja_americana_16': 10,
+            'aguja_vastago_rl': 5,
+            'aguja_vastago_rs': 2,
+            'aguja_vastago_rm': 5,
+            'labret': 10,
+            'septum': 10,
+            'barbell': 10,
+            'nostril': 10,
+            'aro': 6,
+            'tinta_negra_oz': 1,
+            'tinta_blanca_oz': 1,
+            'rollo_papel_sanitario': 1, 
+            'paquete_toallitas_humedas': 1,
         }
 
         qs = (

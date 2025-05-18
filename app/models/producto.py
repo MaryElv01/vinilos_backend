@@ -2,12 +2,20 @@ from django.db import models
 
 class Producto(models.Model):
     NOMBRES = [
+        ('aguja_americana_15', 'Aguja Americana 15'),
         ('aguja_americana_14', 'Aguja Americana 14'),
+        ('aguja_americana_16', 'Aguja Americana 16'),
+        ('aguja_vastago_rl', 'Aguja Vastago RL'),
+        ('aguja_vastago_rs', 'Aguja Vastago RS'),
+        ('aguja_vastago_rm', 'Aguja Vastago RM'),
         ('labret', 'Labret'),
-        ('industrial', 'Industrial'),
-        ('aguja_rl5', 'Aguja RL5'),
-        ('aguja_rl7', 'Aguja RL7'),
+        ('septum', 'Septum'),
+        ('barbell', 'Barbell'),
+        ('nostril', 'Nostril'),
+        ('aro', 'Aro'),
         ('tinta_negra_oz', 'Tinta Negra Oz'),
+        ('tinta_blanca_oz', 'Tinta Blanca Oz'),
+        ('rollo_papel_sanitario', 'Rollo Papel Sanitario'),
         ('paquete_toallitas_humedas', 'Paquete Toallitas Humedas')
     ]
 
