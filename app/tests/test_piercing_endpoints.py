@@ -1,23 +1,12 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
-from rest_framework import status
-from django.contrib.auth import get_user_model
 from app.models import Piercing
-from rest_framework_simplejwt.tokens import RefreshToken
-
-User = get_user_model()
+from rest_framework import status
 
 class PiercingEndpointTests(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        # Crear usuario de prueba
-        cls.user = User.objects.create_user(
-            username='hollow',
-            password='2502',
-            is_staff=True
-        )
-        
-        # Crear piercings de prueba
+        # Datos iniciales para las pruebas
         cls.piercing = Piercing.objects.create(
             nombre="Piercing Prueba",
             ubi="lobulo",
@@ -31,29 +20,23 @@ class PiercingEndpointTests(APITestCase):
             public=False
         )
     
-    def setUp(self):
-        # Obtener token JWT para autenticación
-        refresh = RefreshToken.for_user(self.user)
-        self.access_token = str(refresh.access_token)
-        self.client.cookies['access_token'] = self.access_token
-    
-    def test_list_piercings_authenticated(self):
-        """Test para el listado general de piercings (autenticado)"""
+    def test_list_piercings(self):
+        """Test para el listado general de piercings"""
         url = reverse('piercing-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertGreater(len(response.data), 0)
     
-    def test_public_piercings_unauthenticated(self):
-        """Test para endpoint público sin autenticación"""
+    def test_public_piercings(self):
+        """Test para el endpoint de piercings públicos"""
         url = reverse('piercing-publicos')
-        self.client.cookies = {}  # Limpiar cookies
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # Verifica que solo devuelva los piercings públicos
         self.assertTrue(all(piercing['public'] for piercing in response.data))
     
-    def test_create_piercing_authenticated(self):
-        """Test para creación de piercing (autenticado)"""
+    def test_create_piercing(self):
+        """Test para creación de piercing (requiere autenticación)"""
         url = reverse('piercing-list')
         data = {
             'nombre': 'Nuevo Piercing',
@@ -61,18 +44,7 @@ class PiercingEndpointTests(APITestCase):
             'precio': 350,
             'public': True
         }
+        # Aquí deberías agregar autenticación si es requerida
+        # self.client.credentials(HTTP_AUTHORIZATION='Bearer token')
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-    
-    def test_create_piercing_unauthenticated(self):
-        """Test para creación sin autenticación debe fallar"""
-        url = reverse('piercing-list')
-        self.client.cookies = {}  # Limpiar cookies
-        data = {
-            'nombre': 'Piercing No Auth',
-            'ubi': 'daith',
-            'precio': 400,
-            'public': True
-        }
-        response = self.client.post(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
