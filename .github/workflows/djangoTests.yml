@@ -61,8 +61,19 @@ jobs:
         API_KEY: ${{ secrets.APL_KEY }}
         API_SECRET: ${{ secrets.API_SECRET }}
       run: |
-        coverage run --source='.' manage.py test app.tests
-        coverage run --append --source='.' manage.py test
+        # Crear usuarios de prueba con diferentes roles
+        echo "from django.contrib.auth import get_user_model; \
+        User = get_user_model(); \
+        User.objects.create_user(username='hollow', password='2502', is_superuser=True); \
+        User.objects.create_user(username='perforador', password='perforador123'); \
+        User.objects.create_user(username='tatuador', password='tatuador123'); \
+        User.objects.create_user(username='normal', password='normal123')" | python manage.py shell
+
+        # Ejecutar tests con output detallado
+        python manage.py test app.tests.test_piercing_endpoints --verbosity=2
+        
+        # Ejecutar cobertura
+        coverage run --source='.' manage.py test
         coverage xml
     
     - name: Upload coverage to Codecov
