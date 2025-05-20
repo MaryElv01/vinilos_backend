@@ -30,43 +30,42 @@ jobs:
         pip install -r requirements.txt
         pip install coverage pytest pytest-django
     
-    - name: Run migrations
+    - name: Run migrations and create test user
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DB_NAME: ${{ secrets.DB_NAME }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_PORT: ${{ secrets.DB_PORT }}
-        DEBUG: ${{ secrets.DEBUG }}
-        ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+        DB_NAME: test_db
+        DB_USER: postgres
+        DB_PASSWORD: postgres
+        DB_HOST: localhost
+        DB_PORT: 5432
+        DEBUG: "True"
+        ALLOWED_HOSTS: "*"
         CLOUD_NAME: ${{ secrets.CLOUD_NAME }}
         API_KEY: ${{ secrets.APL_KEY }}
         API_SECRET: ${{ secrets.API_SECRET }}
       run: |
         python manage.py migrate
+        echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_user(username='hollow', password='2502', is_staff=True)" | python manage.py shell
     
     - name: Run tests with coverage
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DB_NAME: ${{ secrets.DB_NAME }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_PORT: ${{ secrets.DB_PORT }}
-        DEBUG: ${{ secrets.DEBUG }}
-        ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+        DB_NAME: test_db
+        DB_USER: postgres
+        DB_PASSWORD: postgres
+        DB_HOST: localhost
+        DB_PORT: 5432
+        DEBUG: "True"
+        ALLOWED_HOSTS: "*"
         CLOUD_NAME: ${{ secrets.CLOUD_NAME }}
         API_KEY: ${{ secrets.APL_KEY }}
         API_SECRET: ${{ secrets.API_SECRET }}
       run: |
-        coverage run --source='.' -m pytest
+        coverage run --source='.' manage.py test app.tests.test_piercing_endpoints
+        coverage run --append --source='.' manage.py test
         coverage xml
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-
-    - name: Collect static files
-      run: python manage.py collectstatic --noinput
