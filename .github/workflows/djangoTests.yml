@@ -9,15 +9,15 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER || 'postgres' }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD || 'postgres' }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB || 'test_db' }}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -32,17 +32,33 @@ jobs:
     
     - name: Run migrations
       env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/test_db' }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE || 'config.settings' }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DEBUG: ${{ secrets.DEBUG }}
+        ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+        CLOUD_NAME: ${{ secrets.CLOUD_NAME }}
+        API_KEY: ${{ secrets.APL_KEY }}
+        API_SECRET: ${{ secrets.API_SECRET }}
       run: |
         python manage.py migrate
     
     - name: Run tests with coverage
       env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/test_db' }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE || 'config.settings' }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DEBUG: ${{ secrets.DEBUG }}
+        ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+        CLOUD_NAME: ${{ secrets.CLOUD_NAME }}
+        API_KEY: ${{ secrets.APL_KEY }}
+        API_SECRET: ${{ secrets.API_SECRET }}
       run: |
         coverage run --source='.' -m pytest
         coverage xml
@@ -51,3 +67,6 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+
+    - name: Collect static files
+      run: python manage.py collectstatic --noinput
