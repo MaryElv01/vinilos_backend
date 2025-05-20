@@ -61,7 +61,7 @@ jobs:
         API_KEY: ${{ secrets.APL_KEY }}
         API_SECRET: ${{ secrets.API_SECRET }}
       run: |
-        coverage run --source='.' manage.py test app/tests/test_piercing_endpoints.py
+        coverage run --source='.' manage.py test app.tests
         coverage run --append --source='.' manage.py test
         coverage xml
     
