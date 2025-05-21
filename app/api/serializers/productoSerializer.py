@@ -5,7 +5,7 @@ from ...models import Producto
 class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto
-        fields = ['nombre', 'cat', 'costo', 'precio', 'foto', 'fecha_v', 'disponible']
+        fields = ['id','nombre', 'cat', 'costo', 'precio', 'foto', 'fecha_v', 'disponible']
         
     def validate_nombre(self, value):
         value = value.lower().replace(' ', '_')
