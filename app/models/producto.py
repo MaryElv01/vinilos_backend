@@ -28,7 +28,7 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=50, choices=NOMBRES)
     cat = models.CharField(max_length=20, choices=CATEGORIA)
     costo = models.DecimalField(max_digits=5, decimal_places=2, default=1.00)
-    precio = models.DecimalField(max_digits=5, decimal_places=2, default=1.00, null=True, blank=True)
+    precio = models.IntegerField(default=250)
     foto = models.CharField(max_length=500, null=True, blank=True)
     fecha_v = models.DateField(default=None, null=True, blank=True)
     disponible = models.BooleanField(default=False)
