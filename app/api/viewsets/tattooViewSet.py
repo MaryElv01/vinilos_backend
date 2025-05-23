@@ -54,14 +54,14 @@ class TattooViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance.foto:
-            public_id = self.get_public_id_from_url(instance.foto.url)
+            public_id = self.get_public_id_from_url(instance.foto)
             cloudinary.uploader.destroy(public_id)
         instance.delete()
         return Response({"message": "Tattoo eliminado"}, status=status.HTTP_204_NO_CONTENT)
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        old_url = instance.foto.url if instance.foto else None
+        old_url = instance.foto if instance.foto else None
 
         image_file = request.FILES.get('foto')
         if image_file:
